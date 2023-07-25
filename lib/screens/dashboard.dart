@@ -25,10 +25,7 @@ class DashboardView extends ConsumerWidget {
         ],
         title: Text(
           'Dota 2 API',
-          style: GoogleFonts.poppins(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-          ),
+          style: GoogleFonts.poppins(fontSize: 17, fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
