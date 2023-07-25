@@ -1,4 +1,3 @@
-import 'package:dotariverpod/screens/dashboard.dart';
 import 'package:dotariverpod/screens/onboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +9,7 @@ void main() {
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Dota 2 API',
-        home: DashboardView(),
+        home: OnBoardView(),
       ),
     ),
   );

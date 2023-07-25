@@ -1,7 +1,8 @@
 import 'package:dotariverpod/provider/dota_provider.dart';
+import 'package:dotariverpod/screens/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DashboardView extends ConsumerWidget {
@@ -10,7 +11,6 @@ class DashboardView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final getHero = ref.watch(DotaProvider);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -55,7 +55,7 @@ class DashboardView extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 30, top: 10),
+              padding: const EdgeInsets.only(left: 30, top: 10, bottom: 10),
               child: Text(
                 'All Heroes',
                 style: GoogleFonts.poppins(
@@ -64,23 +64,50 @@ class DashboardView extends ConsumerWidget {
                 ),
               ),
             ),
-            const Gap(20),
             SingleChildScrollView(
               child: getHero.when(
-                  data: (data) => ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              width: double.infinity,
-                              height: 20,
-                              child: Text('${data[index].localizedName}'));
+                data: (data) => Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Get.to((context) => DetailView(getIndex: index));
                         },
-                      ),
-                  error: ((error, stackTrace) => Text('error')),
-                  loading: () => const Center(
-                        child: CircularProgressIndicator(),
-                      )),
+                        child: Card(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          shadowColor: Colors.green,
+                          color: Colors.white,
+                          child: Container(
+                            height: 60,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              '${data[index].localizedName}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                error: ((error, stackTrace) => const Text('error')),
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
             )
           ],
         ),
